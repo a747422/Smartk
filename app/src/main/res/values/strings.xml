@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Smart K</string>
+    <string name="title_home">主页</string>
+    <string name="title_dashboard">信息</string>
+    <string name="title_notifications">个人</string>
+    <string name="login">登录</string>
+    <string name="login_hint_ID">请输入指定账号</string>
+    <string name="login_hint_Pwd">请输入用户密码</string>
+    <string name="messge_hint">暂无信息通知</string>
+</resources>

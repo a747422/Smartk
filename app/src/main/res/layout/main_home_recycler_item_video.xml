@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.ezvizuikit.open.EZUIPlayer
+        android:id="@+id/player_ui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#FF666666" />
+
+    <ImageButton
+        android:id="@+id/ib_video_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="0dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/player_ui"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <!-- 播放按钮 -->
+        <ImageButton
+            android:id="@+id/ib_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/player_ui"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:padding="0dp"
+            android:src="@drawable/ic_video_play" />
+
+        <View
+            android:id="@+id/sound_line"
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#FF666666" />
+
+        <ImageButton
+            android:id="@+id/btn_realplay_sound"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:padding="0dp" />
+
+        <View
+            android:id="@+id/quality_line"
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#FF000000" />
+
+        <Spinner
+            android:id="@+id/spinner_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/spinner_video" />
+
+        <View
+            android:id="@+id/flow_line"
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#FF666666" />
+        <!-- 播放速度 -->
+
+        <ImageButton
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/ib_realplay_full_screen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_progress_bar"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/ic_messge_info" />
+
+        <TextView
+            android:id="@+id/tv_video_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/little_sapce"
+            android:text="错误信息:" />
+    </LinearLayout>
+</RelativeLayout>

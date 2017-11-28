@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:translationZ="@dimen/setting_horizontal_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/home_horizontal_margin"
+        android:background="@color/whites"
+        android:orientation="vertical"
+        android:radius="10dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="8dp">
+
+                <ImageView
+
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_home_monitoring" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:text="孩子教室监控" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_baby_more"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看更多" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_info_right" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/home_horizontal_margin">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_baby_video"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="8dp"
+                android:layout_weight="0.6"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                tools:ignore="KeyboardInaccessibleWidget">
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="210dp"
+                    android:paddingBottom="32dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_info" />
+
+                <TextView
+                    android:id="@+id/card_tv_baby_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:paddingHorizontal="40dp"
+                    android:text="小二班"
+                    android:textColor="#333333"
+                    android:textSize="20sp" />
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/home_horizontal_margin"
+                android:layout_weight="0.4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_baby_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="请您登陆后查看宝宝信息"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_baby_meg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="宝宝信息"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_baby_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="姓名：叶问" />
+
+                    <TextView
+                        android:id="@+id/tv_baby_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="性别：女" />
+
+                    <TextView
+                        android:id="@+id/tv_baby_class"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="所在班级：小二班" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

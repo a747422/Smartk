@@ -1,0 +1,55 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowActionBar">false</item> <!--垂直-->
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/activity_anim_bottom_to_top</item>
+        <!--设置Dialog的windowFrame框为无-->
+        <!--<item name="android:windowFrame">@null</item> &lt;!&ndash;设置无标题&ndash;&gt;-->
+        <!--<item name="windowNoTitle">true</item> &lt;!&ndash;是否浮现在activity之上&ndash;&gt;-->
+        <!--<item name="android:windowIsFloating">true</item> &lt;!&ndash;是否半透明&ndash;&gt;-->
+        <!--<item name="android:windowIsTranslucent">true</item> &lt;!&ndash;设置窗口内容不覆盖&ndash;&gt;-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+    </style>
+    <!--[Activity动画] 类似dialog--> <style name="activity_anim_bottom_to_top">
+    <item name="android:windowExitAnimation">@anim/activity_dialog_bottom_out</item>
+    <item name="android:windowEnterAnimation">@anim/activity_dialog_bottom_in</item>
+</style>
+
+    <style name="login_ed">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginLeft">@dimen/login_magin</item>
+        <item name="android:layout_marginRight">@dimen/login_magin</item>
+    </style>
+
+    <style name="messge_gm">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+    </style>
+
+    <style name="settings_open">
+        <item name="android:layout_weight">0.1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:src">@drawable/ic_setting_open</item>
+    </style>
+
+    <style name="settings_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">@dimen/setting_horizontal_margin</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+</resources>

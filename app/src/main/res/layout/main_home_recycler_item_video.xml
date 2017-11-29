@@ -36,24 +36,22 @@
             android:src="@drawable/ic_video_play" />
 
         <View
-            android:id="@+id/sound_line"
             android:layout_width="1dp"
             android:layout_height="18dp"
-            android:background="#FF666666" />
+            android:background="#999999" />
 
-        <ImageButton
-            android:id="@+id/btn_realplay_sound"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClick"
-            android:padding="0dp" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/btn_realplay_sound"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:onClick="onClick"-->
+            <!--android:padding="0dp" />-->
 
-        <View
-            android:id="@+id/quality_line"
-            android:layout_width="1dp"
-            android:layout_height="18dp"
-            android:background="#FF000000" />
+        <!--<View-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="18dp"-->
+            <!--android:background="#999999" />-->
 
         <Spinner
             android:id="@+id/spinner_video"
@@ -63,19 +61,18 @@
             android:entries="@array/spinner_video" />
 
         <View
-            android:id="@+id/flow_line"
             android:layout_width="1dp"
             android:layout_height="18dp"
-            android:background="#FF666666" />
+            android:background="#999999" />
         <!-- 播放速度 -->
 
         <ImageButton
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/ib_realplay_full_screen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/white" />
+            android:onClick="onClick"
+            android:padding="0dp"
+            android:id="@+id/ib_realplay_full_screen" />
     </LinearLayout>
 
     <LinearLayout

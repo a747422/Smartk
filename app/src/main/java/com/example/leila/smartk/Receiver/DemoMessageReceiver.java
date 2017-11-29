@@ -78,8 +78,6 @@ public class DemoMessageReceiver extends PushMessageReceiver {
             mUserAccount = message.getUserAccount();
         }
 
-//        EventBus.getDefault().post(new MessageBean(message.getTitle(), message.getDescription(), getNowDate()));
-
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

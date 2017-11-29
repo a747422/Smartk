@@ -2,7 +2,6 @@ package com.example.leila.smartk;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -17,19 +16,13 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.leila.smartk.Acitvity.BabyMoreActivity;
+import com.example.leila.smartk.Acitvity.LoginAcitvity;
 import com.example.leila.smartk.Adapter.MainActivityViewPagerAdapter;
 import com.example.leila.smartk.Bean.LoginBean;
 import com.example.leila.smartk.Frament.HomeFragment;
 import com.example.leila.smartk.Frament.PersonalFragment;
 import com.example.leila.smartk.Utils.Base64Utils;
 import com.example.leila.smartk.Utils.SharedPreferenceUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 
@@ -42,7 +35,6 @@ import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.xutils.common.util.FileUtil.existsSdcard;
 
@@ -54,15 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MainActivityViewPagerAdapter adapter;
     private BottomNavigationView navigation;
-    private PersonalFragment personalFragment;
-    private Bundle bundle = new Bundle();
-    private FragmentManager manager;
-    private HomeFragment homeFragment = new HomeFragment();
-    MiPushMessage m = new MiPushMessage();
-    String messge = "";
     private String id = "", pwd = "";
-    private String error = "", type = "", valid = "", nick = "", name = "", sName = "", mobile = "", email = "", address = "", sex = "", sClass = "", sSex = "";
-    ArrayList<LoginBean> loginBeans = new ArrayList<>();
+    private String type = "", valid = "";
+
     private final static String URI = "http://112.74.212.95/api/api/user_login";
     private final static String TAG = "MainAcitvityLogD";
     //记录第一次点击的时间
@@ -72,24 +58,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        String PushId = MiPushClient.getRegId(this);
         MiPushClient.setAlias(MainActivity.this, "1", null);
         MiPushClient.setUserAccount(this, id, null);
-        //此处要继承support.v4.app.FragmentManager,与app.Fragment有区别
-        personalFragment = new PersonalFragment();
         initView();
 
     }
 
+    //初始化页面
     private void initView() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         //将homeFrament添加到页面
         adapter = new MainActivityViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new BabyMoreActivity());
+        adapter.addFragment(new HomeFragment());
         adapter.addFragment(new PersonalFragment());
-        //  adapter.addFragment(new PersonalFragment());
         viewPager.setAdapter(adapter);
 
         if (SharedPreferenceUtil.getStringData("pwd").isEmpty()) {
@@ -100,10 +82,11 @@ public class MainActivity extends AppCompatActivity {
             type = SharedPreferenceUtil.getStringData("type");
             pwd = Base64Utils.encodeString(pwd);
             Log.d("获取到", id + pwd + "");
-
+            //设置小米推送的设置
             String PushId = getIMEI(this);
             MiPushClient.setAlias(this, id, null);
             MiPushClient.setUserAccount(this, id, null);
+
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("admin_username", id);
@@ -113,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            //post json数据
             RequestParams requestParams = new RequestParams(URI);
             requestParams.setAsJsonContent(true);
             requestParams.setBodyContent(jsonObject.toString());
@@ -162,14 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             pwd = SharedPreferenceUtil.getStringData("pwd");
-
         }
-
         viewPager.addOnPageChangeListener(mPageChangeListener);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
 
+    //懵逼？
     public void getMessge() {
         Intent intent = getIntent();
         JSONObject jsonObject = new JSONObject();
@@ -179,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
             if (jsonObject.toString().length() > 5) {
                 makeText("您有新的信息到达！");
                 viewPager.setCurrentItem(1);
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -215,9 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(0);
 
                     break;
-//                case R.id.navigation_dashboard:
-//                    viewPager.setCurrentItem(1);
-//                    break;
+
                 case R.id.navigation_notifications:
                     viewPager.setCurrentItem(1);
                     break;
@@ -226,52 +206,19 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //读取单卡手机的imei，双卡不知道啥效果
     public static String getIMEI(FragmentActivity context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
         String imei = telephonyManager.getDeviceId();
-
         return imei;
     }
 
-    private void writeSD() {
-        File acpDir = getCacheDir("acp", this);
-        if (acpDir != null)
-            Log.d(TAG, "写SD成功：" + acpDir.getAbsolutePath());
-    }
-
-    public static File getCacheDir(String dirName, Context context) {
-        File result;
-        if (existsSdcard()) {
-            File cacheDir = context.getExternalCacheDir();
-            if (cacheDir == null) {
-                result = new File(Environment.getExternalStorageDirectory(),
-                        "Android/data/" + context.getPackageName() + "/cache/" + dirName);
-            } else {
-                result = new File(cacheDir, dirName);
-            }
-        } else {
-            result = new File(context.getCacheDir(), dirName);
-        }
-        if (result.exists() || result.mkdirs()) {
-            return result;
-        } else {
-            return null;
-        }
-    }
-
-//
-//    private void getIMEI() {
-//        TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-//        if (tm != null)
-//            makeText("读imei成功：" + tm.getDeviceId());
-//    }
 
     private void makeText(String text) {
         Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
     public String JSONTokener(String in) {
-        // consume an optional byte order mark (BOM) if it exists
         if (in != null && in.startsWith("\ufeff")) {
             in = in.substring(1);
         }
@@ -304,6 +251,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getMessge();
-
     }
 }

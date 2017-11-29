@@ -1,13 +1,10 @@
 package com.example.leila.smartk.Frament;
 
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,10 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -33,13 +28,12 @@ import android.widget.Toast;
 
 import com.example.leila.smartk.Acitvity.AboutActivity;
 import com.example.leila.smartk.Acitvity.SettingsActivity;
-import com.example.leila.smartk.Adapter.MyExpandableListViewAdapter;
 import com.example.leila.smartk.Adapter.PersonalViewAdapter;
 import com.example.leila.smartk.Bean.DateBean;
 import com.example.leila.smartk.Bean.LoginBean;
 import com.example.leila.smartk.Bean.MessageBean;
 import com.example.leila.smartk.DB.HelperDb;
-import com.example.leila.smartk.LoginAcitvity;
+import com.example.leila.smartk.Acitvity.LoginAcitvity;
 import com.example.leila.smartk.MainActivity;
 import com.example.leila.smartk.R;
 import com.example.leila.smartk.Utils.HelperUtils;
@@ -61,10 +55,8 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,8 +83,8 @@ public class PersonalFragment extends Fragment {
     private View contentView;
 
     private final static String TAG = "PersonalFragmentLogD";
-    private String Meg = "", description = "", title = "", time = "", id = "";
-    private String valid = "", type = "", nick = "", name = "", sName = "", mobile = "", email = "", address = "", sex = "", sClass = "", sSex = "";
+    private String description = "", title = "", time = "", id = "";
+    private String type = "", nick = "", sName = "", mobile = "", email = "";
 
     private List<HashMap<String, Object>> list;
     private ArrayList<String> spinnerList = new ArrayList<>();
@@ -141,18 +133,7 @@ public class PersonalFragment extends Fragment {
         //创建数据库
         db = new HelperDb(getActivity());
         sqlDb = db.getWritableDatabase();
-
-//        if (SharedPreferenceUtil.getStringData("pwd").isEmpty()) {
-//            // Toast.makeText(getActivity(), "首次登录", Toast.LENGTH_SHORT).show();
-//            tvPersonalHint.setVisibility(View.VISIBLE);
-//            listView.setVisibility(View.INVISIBLE);
-//            TvPersonalUser.setText("登陆后可查看昵称");
-//            TvPersonalIn.setText("登陆后可查看个人信息");
-//        } else {
-//            //自动登录后加载页面
-//            sendInitview(SharedPreferenceUtil.getStringData("id"));
-//
-//        }
+        //item长按删除信息
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -186,7 +167,6 @@ public class PersonalFragment extends Fragment {
     //接收到推送后刷新list事件
     private void sendListView(MessageBean messageBean) {
         if (SharedPreferenceUtil.getStringData("pwd").isEmpty()) {
-            // Toast.makeText(getActivity(), "首次登录", Toast.LENGTH_SHORT).show();
             imPersonalHint.setVisibility(View.VISIBLE);
             tvPersonalHint.setVisibility(View.VISIBLE);
             tvPersonalHint.setText("登陆后可查看信息");
@@ -263,7 +243,6 @@ public class PersonalFragment extends Fragment {
     //家长信息
     private void sendInitview(String user) {
         if (SharedPreferenceUtil.getStringData("pwd").isEmpty()) {
-            // Toast.makeText(getActivity(), "首次登录", Toast.LENGTH_SHORT).show();
             imPersonalHint.setVisibility(View.VISIBLE);
             tvPersonalHint.setVisibility(View.VISIBLE);
             tvPersonalHint.setText("登陆后可查看信息");
@@ -360,7 +339,7 @@ public class PersonalFragment extends Fragment {
 
     }
 
-
+    //请假dialog
     @OnClick(R.id.ll_personal_leave)
     public void OnClickLeave() {
         if (!SharedPreferenceUtil.getStringData("pwd").isEmpty()) {
@@ -430,13 +409,13 @@ public class PersonalFragment extends Fragment {
                                 x.http().post(requestParams, new Callback.CommonCallback<String>() {
                                     @Override
                                     public void onSuccess(String result) {
-                                        makeText("成功请假返回" + result);
+                                        helperUtils.sendmakeText(getActivity(), "请假已成功提交");
 
                                     }
 
                                     @Override
                                     public void onError(Throwable ex, boolean isOnCallback) {
-                                        makeText("请假失败返回" + ex.toString());
+                                        helperUtils.sendmakeText(getActivity(), "请假失败返回系统返回" + ex.toString());
                                     }
 
                                     @Override
@@ -450,7 +429,7 @@ public class PersonalFragment extends Fragment {
                                     }
                                 });
                             } else {
-                                makeText("请您检查请假信息是否留空，如留空请重新填写");
+                                helperUtils.sendmakeText(getActivity(), "请您检查请假信息是否留空，如留空请重新填写");
                             }
                         }
                     });
@@ -467,35 +446,11 @@ public class PersonalFragment extends Fragment {
 
     }
 
-//        final Dialog dialog =
-//                new Dialog(getActivity());
-//        final View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_menu, null);
-//        dialog.setTitle("请选择");
-//        dialog.setContentView(dialogView);
-//        dialog.create();
-//        dialogView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //  dialog.dismiss();
-//                Button btnLeave = dialogView.findViewById(R.id.btn_dialog_leave);
-//                btnLeave.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(final View view) {
-
-
-//                });
-//
-//            }
-//        });
-//
-//        dialog.show();
-
-
     //订阅方法，当接收到事件的时候，会调用该方法
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(MessageBean messageBean) {
         Log.d("onEvent", messageBean.toString());
-        makeText("您有新的信息到达，请点击个人页面查看！");
+        helperUtils.sendmakeText(getActivity(), "您有新的信息到达，请点击个人页面查看！");
         sendListView(messageBean);
 
     }
@@ -503,8 +458,6 @@ public class PersonalFragment extends Fragment {
     //登录页面订阅方法，当接收到事件的时候，会调用该方法
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogin(LoginBean loginBean) {
-        //  makeText("您有新的信息到达，请点击个人页面查看！mmmmm");
-
         type = loginBean.getType();
         if (type.equals("user")) {
             sendInitview(loginBean.getUser_name());
@@ -529,10 +482,5 @@ public class PersonalFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-
-    }
-
-    private void makeText(String text) {
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
     }
 }

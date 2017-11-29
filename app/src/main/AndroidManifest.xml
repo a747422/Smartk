@@ -42,10 +42,9 @@
         <activity android:name=".Acitvity.VideoActivity">
 
         </activity>
-        <activity android:name=".LoginAcitvity"></activity>
+        <activity android:name=".Acitvity.LoginAcitvity"></activity>
         <activity android:name=".Acitvity.SettingsActivity"></activity>
         <activity android:name=".Acitvity.AboutActivity"></activity>
-        <activity android:name=".Acitvity.BabyMoreActivity"></activity>
 
         <service
             android:name="com.xiaomi.push.service.XMPushService"

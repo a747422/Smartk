@@ -1,9 +1,8 @@
-package com.example.leila.smartk;
+package com.example.leila.smartk.Acitvity;
 
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,30 +10,22 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import android.telephony.TelephonyManager;
 
-import com.example.leila.smartk.Acitvity.SettingsActivity;
 import com.example.leila.smartk.Bean.LoginBean;
-import com.example.leila.smartk.Bean.MessageBean;
+import com.example.leila.smartk.R;
 import com.example.leila.smartk.Utils.Base64Utils;
+import com.example.leila.smartk.Utils.HelperUtils;
 import com.example.leila.smartk.Utils.JellyInterpolatorUtils;
 import com.example.leila.smartk.Utils.SharedPreferenceUtil;
 import com.example.leila.smartk.Utils.SubmitButtonUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,7 +37,6 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +44,7 @@ import butterknife.OnClick;
 
 
 /**
+ * 登陆页面
  * Created by Leila on 2017/9/28.
  */
 
@@ -70,9 +61,6 @@ public class LoginAcitvity extends AppCompatActivity {
     RadioButton rbLoginLeader;
     @BindView(R.id.input_layout_id)
     RadioGroup inputLoginId;
-
-    //    @BindView(R.id.main_btn_login)
-//    TextView mBtnLogin;
     @BindView(R.id.submit_button)
     SubmitButtonUtils submitButton;
     @BindView(R.id.layout_progress)
@@ -84,29 +72,21 @@ public class LoginAcitvity extends AppCompatActivity {
     @BindView(R.id.input_layout_pwd)
     LinearLayout mPwd;
 
-    private float mWidth, mHeight;
     private String id = "", pwd = "";
 
-    private String error = "", type = "", valid = "", nick = "", name = "", sName = "", mobile = "", email = "", address = "", sex = "", sClass = "", sSex = "";
-
-    SharedPreferences sp;
+    private String type = "", valid = "";
     private final static String URI = "http://112.74.212.95/api/api/user_login";
     private final static String MAG = "LoginAcitvityLogD";
-    HashMap<String, Object> hashMaps = new HashMap<String, Object>();
-    ArrayList<LoginBean> loginBeans = new ArrayList<>();
-//账号密码lolode  12345678
+    HelperUtils helperUtils = new HelperUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_personal_login);
         ButterKnife.bind(this);
-        mEdPwd.setText("123456");
-
-
         rbLoginPatriarch.setChecked(true);
         type = "user";
-
+        //radioGroup已弃用
         inputLoginId.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -121,12 +101,12 @@ public class LoginAcitvity extends AppCompatActivity {
                     type = "admin";
                 }
 
-                Toast.makeText(LoginAcitvity.this, "选择：" + type, Toast.LENGTH_SHORT).show();
+                helperUtils.sendmakeText(LoginAcitvity.this, "选择：" + type);
             }
         });
     }
 
-
+    //登录按钮
     @OnClick(R.id.submit_button)
     public void submitButtonOnCilck(View view) {
         id = mEdId.getText().toString();
@@ -134,6 +114,7 @@ public class LoginAcitvity extends AppCompatActivity {
 
         pwd = Base64Utils.encodeString(pwd);
         Log.d("pwd加密后", pwd);
+
         progressAnimator(mInputLayout);
 
         String PushId = getIMEI(this);
@@ -153,15 +134,12 @@ public class LoginAcitvity extends AppCompatActivity {
         RequestParams requestParams = new RequestParams(URI);
         requestParams.setAsJsonContent(true);
         requestParams.setBodyContent(jsonObject.toString());
-//        requestParams.addBodyParameter("admin_username", id);
-//        requestParams.addParameter("admin_password", pwd);
         Log.d(MAG, "请求连接为" + requestParams.toString());
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
 
             @Override
             public void onSuccess(String result) {
                 Log.d(MAG, "服务器请求成功，返回" + result);
-                Toast.makeText(LoginAcitvity.this, "服务器请求成功，返回\"" + result + "\"", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(JSONTokener(result));
                     valid = jsonObject.getString("valid");
@@ -176,40 +154,16 @@ public class LoginAcitvity extends AppCompatActivity {
                             EventBus.getDefault().post(new LoginBean(id, "admin"));
                         }
                         finish();
-                        Toast.makeText(LoginAcitvity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        helperUtils.sendmakeText(LoginAcitvity.this, "登录成功");
                     } else {
                         SharedPreferenceUtil.SaveData("pwd", "");
                         submitButton.doResult(false);
                         submitButton.reset();
-                        Toast.makeText(LoginAcitvity.this, "账号或密码错误", Toast.LENGTH_SHORT).show();
+                        helperUtils.sendmakeText(LoginAcitvity.this, "账号或密码错误");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-//                    JsonObject jsonObjects = new JsonParser().parse(result).getAsJsonObject();
-//                    Gson gson = new Gson();
-//
-//                    JsonArray jsonArray = jsonObjects.getAsJsonArray("data");
-//                    for (JsonElement res : jsonArray) {
-//                        LoginBean labelBean = gson.fromJson(res, new TypeToken<LoginBean>() {
-//                        }.getType());
-//                        loginBeans.add(labelBean);
-//
-//                    }
-//                    valid = jsonObject.getString("valid");
-//                    for (LoginBean res : loginBeans) {
-//                        name = res.getReal_name();
-//                        sName = res.getS_name();
-//                        nick = res.getNick();
-//                        email = res.getEmail();
-//                        mobile = res.getMobile();
-//                        address = res.getAddress();
-//                        sex = res.getSex();
-//                        sClass = res.getS_class();
-//                        sSex = res.getS_sex();
-//                    }
 
             }
 
@@ -219,7 +173,7 @@ public class LoginAcitvity extends AppCompatActivity {
                 submitButton.reset();
                 SharedPreferenceUtil.SaveData("pwd", "");
                 Log.d(MAG, "错误" + ex.toString());
-                Toast.makeText(LoginAcitvity.this, "网络错误：" + ex.toString(), Toast.LENGTH_SHORT).show();
+                helperUtils.sendmakeText(LoginAcitvity.this, "网络错误：" + ex.toString());
 
             }
 
@@ -276,6 +230,7 @@ public class LoginAcitvity extends AppCompatActivity {
 
     }
 
+    //动画效果
     private void progressAnimator(final View view) {
         PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX",
                 0.5f, 1f);
@@ -290,7 +245,6 @@ public class LoginAcitvity extends AppCompatActivity {
     }
 
     public String JSONTokener(String in) {
-        // consume an optional byte order mark (BOM) if it exists
         if (in != null && in.startsWith("\ufeff")) {
             in = in.substring(1);
         }
@@ -302,18 +256,5 @@ public class LoginAcitvity extends AppCompatActivity {
         String imei = telephonyManager.getDeviceId();
         return imei;
     }
-//
-//    public HashMap<String, Object> parseJSONWithGSON(String response) {
-//        Gson gson = new Gson();
-//        List<LoginBean> ressul = gson.fromJson(response, new TypeToken<List<LoginBean>>() {
-//        }.getType());
-//        for (LoginBean res : ressul) {
-//            if (res.getValid().equals("1")) {
-//                hashMaps.put("Valid", res.getValid());
-//                hashMaps.put("UserName", res.getUserName());
-//                hashMaps.put("Email", res.getEmail());
-//            }
-//        }
-//        return hashMaps;
-//    }
+
 }

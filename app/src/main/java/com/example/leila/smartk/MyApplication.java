@@ -35,12 +35,11 @@ public class MyApplication extends Application {
     // com.xiaomi.mipushdemo
     public static final String TAG = "com.example.leila.smartk";
     private static final String APP_KEY_VIDEO = "689ca4c3c61845cc8aa163e07e66d94b";
-    private List<Activity> oList;//用于存放所有启动的Activity的集合
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        oList = new ArrayList<Activity>();
         SharedPreferenceUtil.init(getApplicationContext(), "user");
         x.Ext.init(this);
         //初始化push推送服务
@@ -89,17 +88,6 @@ public class MyApplication extends Application {
         return false;
     }
 
-    /**
-     * 销毁所有的Activity
-     */
-    public void removeALLActivity_() {
 
-        //通过循环，把集合中的所有Activity销毁
-        for (Activity activity : oList) {
-            activity.finish();
-
-        }
-
-    }
 }
 

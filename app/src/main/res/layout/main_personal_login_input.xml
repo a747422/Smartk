@@ -75,7 +75,8 @@
             android:id="@+id/input_layout_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <RadioButton
                 android:id="@+id/rb_login_leader"

@@ -17,8 +17,7 @@
         android:layout_width="230dp"
         android:layout_height="210dp"
         android:paddingBottom="32dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/banner" />
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/tv_title"

@@ -22,6 +22,7 @@ import com.example.leila.smartk.Bean.DateBean;
 import com.example.leila.smartk.Bean.VideoBean;
 import com.example.leila.smartk.Frament.PersonalFragment;
 import com.example.leila.smartk.R;
+import com.example.leila.smartk.Utils.HelperUtils;
 import com.ezvizuikit.open.EZUIError;
 import com.ezvizuikit.open.EZUIKit;
 import com.ezvizuikit.open.EZUIPlayer;
@@ -59,8 +60,8 @@ public class VideoActivity extends AppCompatActivity {
     Spinner mSpinner;
     @BindView(R.id.ib_play)
     ImageButton mIbPlay;
-    @BindView(R.id.btn_realplay_sound)
-    ImageButton mIbVoice;
+    //    @BindView(R.id.btn_realplay_sound)
+//    ImageButton mIbVoice;
     @BindView(R.id.ib_realplay_full_screen)
     ImageButton mIbFullScreen;
     @BindView(R.id.ll_progress_bar)
@@ -72,23 +73,17 @@ public class VideoActivity extends AppCompatActivity {
 
     private static String playHDUrl = "";
     private static String playUrl = "";
-
-
     private String accessToken = "at.3ruz424f4bkhe7eycv309ovw9hionezl-6ihimh3dyc-1cdhxnt-ctps0vxav";
 
     private static Boolean mboolean = true, mbool = true;
 
-    ArrayList<VideoBean> videoBeans = new ArrayList<>();
-
     private int screenWidth;
     private int screenHeight;
-    private boolean sensor_flag = true;
-    private boolean stretch_flag = true;
     private final static String TAG = "VideoActivityLogD";
     private String Voice = "高清", sClass = "";
     private boolean cancel = true;
     private Intent intent;
-
+    HelperUtils utils = new HelperUtils();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,19 +128,13 @@ public class VideoActivity extends AppCompatActivity {
     //填充页面连接
     private void initView() {
 
-        //设置播放按钮，将ImageButton的背景设置为透明
-        // mIbPlay.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_play));
         mIbPlay.getBackground().setAlpha(0);
-        //设置声音按钮
-        mIbVoice.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_voice));
-        mIbVoice.getBackground().setAlpha(0);
         //设置全屏按钮
         mIbFullScreen.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_full_screen));
         mIbFullScreen.getBackground().setAlpha(0);
         //设置关闭全屏按钮
         mIbVideoCancel.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_cancel));
         mIbVideoCancel.getBackground().setAlpha(0);
-        // mIbVideoCancel.setVisibility(View.INVISIBLE);
         Log.d(TAG, accessToken + "最后");
         //设置授权token
         EZUIKit.setAccessToken(accessToken);
@@ -175,7 +164,7 @@ public class VideoActivity extends AppCompatActivity {
 
                 String[] languages = getResources().getStringArray(R.array.spinner_video);
                 Voice = languages[pos];
-                Toast.makeText(VideoActivity.this, "你点击的是:" + Voice, Toast.LENGTH_SHORT).show();
+                utils.sendmakeText(VideoActivity.this,"你点击的是:" + Voice);
                 if (Voice.equals("清晰")) {
                     //设置播放参数
                     mPlayer.setUrl(playUrl);
@@ -197,16 +186,12 @@ public class VideoActivity extends AppCompatActivity {
         mIbFullScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  sm.unregisterListener(listener);
-                //  Toast.makeText(getApplicationContext(), "点击切换屏幕", Toast.LENGTH_SHORT).show();
                 cancel = false;
-                stretch_flag = true;
                 mPlayer.releasePlayer();
                 //切换成横屏
                 VideoActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 mLlProgressBar.setVisibility(View.INVISIBLE);
 
-                //   mIbVideoCancel.setVisibility(View.VISIBLE);
                 mPlayer.setSurfaceSize(screenWidth, screenHeight);
 
 
@@ -230,7 +215,6 @@ public class VideoActivity extends AppCompatActivity {
                     finish();
                 } else {
                     cancel = true;
-                    stretch_flag = false;
                     mPlayer.releasePlayer();
                     //切换成竖屏
                     VideoActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -242,7 +226,6 @@ public class VideoActivity extends AppCompatActivity {
 
                     //设置播放回调callBack
                     setmPlayer();
-                    //  mIbVideoCancel.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -254,7 +237,7 @@ public class VideoActivity extends AppCompatActivity {
     public void OnClickPlay() {
         if (mboolean) {
             mPlayer.startPlay();
-            mIbPlay.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_pause));
+            mIbPlay.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_play));
             if (Voice.equals("清晰")) {
                 //设置播放参数
                 mPlayer.setUrl(playUrl);
@@ -268,44 +251,10 @@ public class VideoActivity extends AppCompatActivity {
             mboolean = false;
         } else {
             mPlayer.stopPlay();
-            mIbPlay.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_play));
+            mIbPlay.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_pause));
             mboolean = true;
         }
     }
-
-    @OnClick(R.id.btn_realplay_sound)
-    public void OnClickVoice() {
-
-        if (mbool) {
-            mIbVoice.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_mute));
-            mbool = false;
-            String str = "?mute=false";
-            if (Voice.equals("清晰")) {
-                //设置播放参数
-                mPlayer.setUrl(playHDUrl + str);
-            } else {
-                //设置播放参数
-                mPlayer.setUrl(playUrl + str);
-            }
-            //设置播放回调callBack
-            setmPlayer();
-        } else {
-
-            mIbVoice.setImageDrawable(getResources().getDrawable(R.drawable.ic_video_voice));
-            mbool = true;
-            if (Voice.equals("清晰")) {
-                //设置播放参数
-                mPlayer.setUrl(playHDUrl);
-            } else {
-                //设置播放参数
-                mPlayer.setUrl(playUrl);
-            }
-            //设置播放回调callBack
-            setmPlayer();
-
-        }
-    }
-
 
     private void setmPlayer() {
         //设置播放回调callBack

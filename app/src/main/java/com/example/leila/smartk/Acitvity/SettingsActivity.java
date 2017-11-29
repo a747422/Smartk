@@ -65,9 +65,6 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.iv_settings_sex)
     ImageView ivSettingsSex;
 
-    private SQLiteDatabase sqlDb = null;
-    private HelperDb db = null;
-    private Cursor cursor;
     private Intent intent = new Intent();
     private String valid = "", id = "", type = "", nick = "", name = "", sName = "", mobile = "", email = "", address = "", sex = "", sClass = "", sSex = "";
     private final static String URI = "http://112.74.212.95/api/api/edit_user";
@@ -92,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-
+    //修改信息
     private void sendHttp(JSONObject jsonObject) {
         RequestParams requestParams = new RequestParams(URI);
         requestParams.setAsJsonContent(true);
@@ -100,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                utils.sendmakeText(SettingsActivity.this, "成功返回" + result);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     valid = jsonObject.getString("valid");
@@ -183,13 +180,13 @@ public class SettingsActivity extends AppCompatActivity {
                 } else if (type.equals("admin")) {
                     EventBus.getDefault().post(new LoginBean(id, "admin"));
                 }
-
+                utils.sendmakeText(SettingsActivity.this, "信息修改成功");
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.d("mmmm", "错误" + ex.toString());
-                Toast.makeText(SettingsActivity.this, "网络错误：" + ex.toString(), Toast.LENGTH_SHORT).show();
+                utils.sendmakeText(SettingsActivity.this,"网络错误：" + ex.toString());
             }
 
             @Override

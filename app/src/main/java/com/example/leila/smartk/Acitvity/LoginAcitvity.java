@@ -3,9 +3,12 @@ package com.example.leila.smartk.Acitvity;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +40,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -153,6 +157,7 @@ public class LoginAcitvity extends AppCompatActivity {
                         } else if (type.equals("admin")) {
                             EventBus.getDefault().post(new LoginBean(id, "admin"));
                         }
+                        MiPushClient.resumePush(getApplicationContext(),null);
                         finish();
                         helperUtils.sendmakeText(LoginAcitvity.this, "登录成功");
                     } else {
@@ -207,6 +212,7 @@ public class LoginAcitvity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 SharedPreferenceUtil.SaveData("pwd", "");
+                                MiPushClient.pausePush(getApplicationContext(),null);
                                 if (type.equals("user")) {
                                     EventBus.getDefault().post(new LoginBean(id, "user"));
                                 } else if (type.equals("admin")) {

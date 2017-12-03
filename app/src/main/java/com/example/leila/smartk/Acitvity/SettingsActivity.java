@@ -180,7 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
                 } else if (type.equals("admin")) {
                     EventBus.getDefault().post(new LoginBean(id, "admin"));
                 }
-                utils.sendmakeText(SettingsActivity.this, "信息修改成功");
+
             }
 
             @Override

@@ -1,0 +1,69 @@
+<main>
+├AndroidManifest.xml  //配置向Android声明应用程序的组件
+├<java>
+│  ├<com>
+│  │  ├<example>
+│  │  │  ├<leila>
+│  │  │  │  ├<smartk>
+│  │  │  │  │  ├MainActivity.java   //主页面
+│  │  │  │  │  ├MyApplication.java  //初始化EZUIKit、初始化push推送服务
+│  │  │  │  │  ├<Acitvity>
+│  │  │  │  │  │  ├AboutActivity.java   //关于我们代码
+│  │  │  │  │  │  ├LoginAcitvity.java   //登录页面代码
+│  │  │  │  │  │  ├SettingsActivity.java  //个人信息修改代码
+│  │  │  │  │  │  └VideoActivity.java  //视频页面  setURL(String sClass)获取教室后判断视频连接，如有新教室请自行添加
+│  │  │  │  │  ├<Adapter>  //适配器
+│  │  │  │  │  │  ├HomeViewAdapter.java  
+│  │  │  │  │  │  ├MainActivityViewPagerAdapter.java  
+│  │  │  │  │  │  ├PersonalViewAdapter.java
+│  │  │  │  │  │  └RecyclerViewAdapter.java
+│  │  │  │  │  ├<Bean>  //实体类
+│  │  │  │  │  │  ├DateBean.java  
+│  │  │  │  │  │  ├LoginBean.java
+│  │  │  │  │  │  ├MessageBean.java
+│  │  │  │  │  │  ├VideoBean.java
+│  │  │  │  │  │  └VideoListBean.java
+│  │  │  │  │  ├<DB>  //SQLite数据库
+│  │  │  │  │  │  └HelperDb.java
+│  │  │  │  │  ├<Frament>
+│  │  │  │  │  │  ├HomeFragment.java  //主页视频列表 getAccessToken()方法是获取萤石令牌，时间为6天/1次
+│  │  │  │  │  │  └PersonalFragment.java  //个人页面  OnClickLeave()方法是点击请假弹出Dialog  sendRefresh()方法让推送信息显示
+│  │  │  │  │  ├<Receiver>  //小米推送文件
+│  │  │  │  │  │  └DemoMessageReceiver.java
+│  │  │  │  │  ├<Utils>  //工具类
+│  │  │  │  │  │  ├Base64Utils.java  //登录加密工具类
+│  │  │  │  │  │  ├HelperUtils.java  //帮助工具类
+│  │  │  │  │  │  ├JellyInterpolatorUtils.java  
+│  │  │  │  │  │  ├SharedPreferenceUtil.java  //SharedPreference工具类
+│  │  │  │  │  │  └SubmitButtonUtils.java  //登录按钮工具类
+├<res>
+│  ├<layout>
+│  │  ├activity_main.xml
+│  │  ├dialog_menu.xml
+│  │  ├dialog_menu_in.xml  //请假Dialog
+│  │  ├dialog_push_time.xml
+│  │  ├dialog_settings.xml
+│  │  ├home_baby_info.xml
+│  │  ├home_baby_more.xml  //主页页面
+│  │  ├home_baby_more_item.xml
+│  │  ├home_baby_more_title.xml
+│  │  ├main_home.xml
+│  │  ├main_home_frament_item.xml
+│  │  ├main_home_recycler_item.xml
+│  │  ├main_home_recycler_item_video.xml
+│  │  ├main_personal.xml  //个人页面
+│  │  ├main_personal_child_item.xml
+│  │  ├main_personal_head.xml
+│  │  ├main_personal_item.xml
+│  │  ├main_personal_login.xml  //登录页面
+│  │  ├main_personal_login_input.xml
+│  │  ├main_personal_login_progress.xml
+│  │  ├main_personal_login_title.xml
+│  │  ├main_personal_parent_item.xml
+│  │  ├personal_abouts.xml  //关于我们
+│  │  ├personal_abouts_title.xml
+│  │  ├personal_settings.xml  //信息设置界面
+│  │  ├personal_settings_title.xml
+│  │  └spinner_item.xml
+│  ├<menu>
+│  │  └navigation.xml  //更改BottomNavigationView文字内容

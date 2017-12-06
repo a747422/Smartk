@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.xiaomi.mipush.sdk.MiPushClient;
+
 import android.telephony.TelephonyManager;
 
 import com.example.leila.smartk.Bean.LoginBean;
@@ -24,7 +26,6 @@ import com.example.leila.smartk.Utils.HelperUtils;
 import com.example.leila.smartk.Utils.JellyInterpolatorUtils;
 import com.example.leila.smartk.Utils.SharedPreferenceUtil;
 import com.example.leila.smartk.Utils.SubmitButtonUtils;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -149,7 +150,7 @@ public class LoginAcitvity extends AppCompatActivity {
                             EventBus.getDefault().post(new LoginBean(id, "admin"));
                         }
                         //登录成功后接收小米推送缓存的信息
-                        MiPushClient.resumePush(getApplicationContext(),null);
+                        MiPushClient.resumePush(getApplicationContext(), null);
                         finish();
                         helperUtils.sendmakeText(LoginAcitvity.this, "登录成功");
                     } else {
@@ -204,7 +205,7 @@ public class LoginAcitvity extends AppCompatActivity {
 
                                 SharedPreferenceUtil.SaveData("pwd", "");
                                 //退出登录后接收小米推送暂停的信息
-                                MiPushClient.pausePush(getApplicationContext(),null);
+                                MiPushClient.pausePush(getApplicationContext(), null);
                                 if (type.equals("user")) {
                                     EventBus.getDefault().post(new LoginBean(id, "user"));
                                 } else if (type.equals("admin")) {

@@ -226,7 +226,7 @@ public class HomeFragment extends Fragment implements HomeViewAdapter.ItemOnClic
             second = (int) (begin - end) % 86400 % 3600 % 60;
             Log.d("时间", "相差时间" + days + "天" + hour + "小时" + minutes + "分钟" + second + "秒");
         }
-
+    //大于6天的时候重新请求服务器
         if (days >= 6) {
 
             JSONObject jsonObject = new JSONObject();

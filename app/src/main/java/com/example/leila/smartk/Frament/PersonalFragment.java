@@ -218,11 +218,9 @@ public class PersonalFragment extends Fragment {
             tvPersonalHint.setVisibility(View.GONE);
             while (cursor.moveToNext()) {
                 HashMap<String, Object> map = new HashMap<>();
-                //  parentList[i] = cursor.getString(cursor.getColumnIndex("title"));
                 map.put("title", cursor.getString(cursor.getColumnIndex("title")));
                 map.put("description", cursor.getString(cursor.getColumnIndex("description")));
                 map.put("time", cursor.getString(cursor.getColumnIndex("time")));
-                Log.d("真的奇怪", cursor.getString(cursor.getColumnIndex("time")) + "//" + cursor.getString(cursor.getColumnIndex("description")));
                 list.add(map);
 
             }

@@ -16,32 +16,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.leila.smartk.Bean.DateBean;
-import com.example.leila.smartk.Bean.VideoBean;
-import com.example.leila.smartk.Frament.PersonalFragment;
 import com.example.leila.smartk.R;
 import com.example.leila.smartk.Utils.HelperUtils;
 import com.ezvizuikit.open.EZUIError;
 import com.ezvizuikit.open.EZUIKit;
 import com.ezvizuikit.open.EZUIPlayer;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -49,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 视频页面
  * Created by Leila on 2017/10/27.
  */
 
@@ -60,8 +42,6 @@ public class VideoActivity extends AppCompatActivity {
     Spinner mSpinner;
     @BindView(R.id.ib_play)
     ImageButton mIbPlay;
-    //    @BindView(R.id.btn_realplay_sound)
-//    ImageButton mIbVoice;
     @BindView(R.id.ib_realplay_full_screen)
     ImageButton mIbFullScreen;
     @BindView(R.id.ll_progress_bar)
@@ -103,23 +83,19 @@ public class VideoActivity extends AppCompatActivity {
         mOnCilck();
     }
 
-
     //获取教室后判断视频连接
     private void setURL(String sClass) {
         switch (sClass) {
             case "小二班":
-
                 playHDUrl = "ezopen://open.ys7.com/818891142/1.hd.live";
                 playUrl = "ezopen://open.ys7.com/818891142/1.live";
-
-
                 break;
             case "小一班":
                 playHDUrl = "ezopen://open.ys7.com/112186720/1.hd.live";
                 playUrl = "ezopen://open.ys7.com/112186720/1.live";
-
                 break;
             default:
+                mTvVideoError.setText("信息提示：" + "班级不存在或班级未安装摄像头");
                 break;
         }
 
@@ -164,7 +140,7 @@ public class VideoActivity extends AppCompatActivity {
 
                 String[] languages = getResources().getStringArray(R.array.spinner_video);
                 Voice = languages[pos];
-                utils.sendmakeText(VideoActivity.this,"你点击的是:" + Voice);
+                utils.sendmakeText(VideoActivity.this, "你点击的是:" + Voice);
                 if (Voice.equals("清晰")) {
                     //设置播放参数
                     mPlayer.setUrl(playUrl);
@@ -211,7 +187,6 @@ public class VideoActivity extends AppCompatActivity {
 
                 if (cancel) {
                     mPlayer.releasePlayer();
-//                    cancel = false;
                     finish();
                 } else {
                     cancel = true;

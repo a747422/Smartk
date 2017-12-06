@@ -1,11 +1,7 @@
 package com.example.leila.smartk.Acitvity;
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -16,11 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.leila.smartk.Bean.DateBean;
 import com.example.leila.smartk.Bean.LoginBean;
-import com.example.leila.smartk.DB.HelperDb;
 import com.example.leila.smartk.R;
 import com.example.leila.smartk.Utils.HelperUtils;
 import com.google.gson.Gson;
@@ -45,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ *  个人信息设置
  * Created by Leila on 2017/11/18.
  */
 

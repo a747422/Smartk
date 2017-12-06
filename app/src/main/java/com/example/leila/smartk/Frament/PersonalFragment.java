@@ -64,6 +64,7 @@ import butterknife.OnClick;
 
 
 /**
+ * 推送信息页面
  * Created by Leila on 2017/9/20.
  */
 

@@ -3,12 +3,8 @@ package com.example.leila.smartk.Acitvity;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +14,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import android.telephony.TelephonyManager;
 
@@ -37,10 +32,6 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +81,7 @@ public class LoginAcitvity extends AppCompatActivity {
         ButterKnife.bind(this);
         rbLoginPatriarch.setChecked(true);
         type = "user";
+
         //radioGroup已弃用
         inputLoginId.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -125,7 +117,6 @@ public class LoginAcitvity extends AppCompatActivity {
         MiPushClient.setAlias(this, id, null);
         MiPushClient.setUserAccount(this, id, null);
 
-
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("admin_username", id);
@@ -157,6 +148,7 @@ public class LoginAcitvity extends AppCompatActivity {
                         } else if (type.equals("admin")) {
                             EventBus.getDefault().post(new LoginBean(id, "admin"));
                         }
+                        //登录成功后接收小米推送缓存的信息
                         MiPushClient.resumePush(getApplicationContext(),null);
                         finish();
                         helperUtils.sendmakeText(LoginAcitvity.this, "登录成功");
@@ -193,8 +185,6 @@ public class LoginAcitvity extends AppCompatActivity {
             }
 
         });
-        pwd = mEdPwd.getText().toString();
-
     }
 
     @OnClick({R.id.iv_cancel, R.id.tv_exit})
@@ -211,7 +201,9 @@ public class LoginAcitvity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
                                 SharedPreferenceUtil.SaveData("pwd", "");
+                                //退出登录后接收小米推送暂停的信息
                                 MiPushClient.pausePush(getApplicationContext(),null);
                                 if (type.equals("user")) {
                                     EventBus.getDefault().post(new LoginBean(id, "user"));

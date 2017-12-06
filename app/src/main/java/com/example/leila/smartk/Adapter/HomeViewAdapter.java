@@ -15,16 +15,17 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ *
  * Created by Leila on 2017/11/7.
  */
 
-public class BabyMoreViewAdapter extends BaseAdapter implements View.OnClickListener {
+public class HomeViewAdapter extends BaseAdapter implements View.OnClickListener {
     private final Context context;
     private final List<HashMap<String, Object>> list;
     private final int resource;
     private ItemOnClickListener itemOnClickListener;
 
-    public BabyMoreViewAdapter(Context context, List<HashMap<String, Object>> list, int resource, ItemOnClickListener itemOnClickListener) {
+    public HomeViewAdapter(Context context, List<HashMap<String, Object>> list, int resource, ItemOnClickListener itemOnClickListener) {
         this.context = context;
         this.list = list;
         this.resource = resource;

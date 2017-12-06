@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.leila.smartk.Acitvity.VideoActivity;
-import com.example.leila.smartk.Adapter.BabyMoreViewAdapter;
+import com.example.leila.smartk.Adapter.HomeViewAdapter;
 import com.example.leila.smartk.Bean.DateBean;
 import com.example.leila.smartk.Bean.LoginBean;
 import com.example.leila.smartk.DB.HelperDb;
@@ -48,11 +48,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 主页面
  * 当要继承support.v4.app.FragmentManager,与app.Fragment有区别
  * Created by Leila on 2017/11/24.
  */
 
-public class HomeFragment extends Fragment implements BabyMoreViewAdapter.ItemOnClickListener {
+public class HomeFragment extends Fragment implements HomeViewAdapter.ItemOnClickListener {
     @BindView(R.id.lv_more)
     ListView lvMore;
     @BindView(R.id.tv_baby_hint)
@@ -64,7 +65,7 @@ public class HomeFragment extends Fragment implements BabyMoreViewAdapter.ItemOn
     HelperUtils utils = new HelperUtils();
     ArrayList<DateBean> dateBeans = new ArrayList<>();
     private List<HashMap<String, Object>> list;
-    BabyMoreViewAdapter babyMoreViewAdapter;
+    HomeViewAdapter homeViewAdapter;
     private String id = "", type = "";
     private final static String TAG = "BabyMoreActivityLogD";
     private static final String APP_KEY_VIDEO = "689ca4c3c61845cc8aa163e07e66d94b";
@@ -135,9 +136,9 @@ public class HomeFragment extends Fragment implements BabyMoreViewAdapter.ItemOn
                     }
                     Log.d(TAG, "list数据" + list.toString());
 
-                    babyMoreViewAdapter = new BabyMoreViewAdapter(getActivity(), list, R.layout.home_baby_more_item, HomeFragment.this);
-                    babyMoreViewAdapter.notifyDataSetChanged();
-                    lvMore.setAdapter(babyMoreViewAdapter);
+                    homeViewAdapter = new HomeViewAdapter(getActivity(), list, R.layout.home_baby_more_item, HomeFragment.this);
+                    homeViewAdapter.notifyDataSetChanged();
+                    lvMore.setAdapter(homeViewAdapter);
 
                 }
 

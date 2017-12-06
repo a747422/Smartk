@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import android.telephony.TelephonyManager;
 
@@ -26,6 +25,7 @@ import com.example.leila.smartk.Utils.HelperUtils;
 import com.example.leila.smartk.Utils.JellyInterpolatorUtils;
 import com.example.leila.smartk.Utils.SharedPreferenceUtil;
 import com.example.leila.smartk.Utils.SubmitButtonUtils;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;

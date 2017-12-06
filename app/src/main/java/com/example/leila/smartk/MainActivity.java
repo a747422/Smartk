@@ -24,7 +24,6 @@ import com.example.leila.smartk.Frament.PersonalFragment;
 import com.example.leila.smartk.Utils.Base64Utils;
 import com.example.leila.smartk.Utils.SharedPreferenceUtil;
 import com.xiaomi.mipush.sdk.MiPushClient;
-import com.xiaomi.mipush.sdk.MiPushMessage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -32,11 +31,6 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.io.File;
-import java.util.ArrayList;
-
-import static org.xutils.common.util.FileUtil.existsSdcard;
 
 
 /**
